@@ -11,4 +11,8 @@ class AuthRepository implements AuthRepositoryInterface
     {
         return   User::create($data);
     }
+    public function getUserByEmail($email)
+    {
+        return User::where('email', $email)->first();
+    }
 }

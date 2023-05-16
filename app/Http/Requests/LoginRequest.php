@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,18 +22,11 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|unique:users|email',
-            'password' => 'required|min:8|confirmed',
-            'username' => 'required',
-            'avatar' => 'required|image|max:2048|mimes:png,jpg,svg',
+            'email' => 'required|email',
+            'password' => 'required',
         ];
     }
-    /**
-     * Configure the validator instance.
-     *
-     * @param  \Illuminate\Validation\Validator  $validator
-     * @return void
-     */
+
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
         throw new \Illuminate\Http\Exceptions\HttpResponseException(response()->json($validator->errors(), 400));
