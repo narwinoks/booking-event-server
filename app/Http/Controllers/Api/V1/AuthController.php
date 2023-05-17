@@ -42,4 +42,9 @@ class AuthController extends Controller
     {
         return $this->authServices->login($request->all());
     }
+
+    public function refreshToken(Request $request)
+    {
+        return $this->authServices->getRefreshToken();
+    }
 }

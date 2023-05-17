@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,5 +29,9 @@ Route::prefix('/V1')->group(function () {
         Route::post('/login', 'login')->name('login');
         Route::post('/register', 'register')->name('register');
         Route::post('/verification', 'verification')->name('verification');
+        Route::get('/refresh-token', 'refreshToken')->name('refreshToken')->middleware('refresh.jwt');
+    });
+    Route::middleware('auth.jwt')->controller(UserController::class)->prefix('/user')->group(function () {
+        Route::get('/profile', 'profile')->name('profile');
     });
 });

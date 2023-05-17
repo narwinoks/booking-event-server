@@ -12,8 +12,8 @@ class GenerateTokenServices
     {
         $expirationTime = time() + env('ACCESS_TOKEN_EXPIRED');
         $secretKey = env('JWT_ACCESS_TOKEN_SECRET');
-        $jwtWithExpiration = JWT::encode(['exp' => $expirationTime] + $payload, $secretKey, 'HS256');
-        return $jwtWithExpiration;
+        $access = JWT::encode(['exp' => $expirationTime] + $payload, $secretKey, 'HS256');
+        return $access;
     }
 
     public function refreshToken($payload)
