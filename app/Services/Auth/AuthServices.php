@@ -119,4 +119,18 @@ class AuthServices
             return $this->errorResponse($result['message'], 500);
         }
     }
+
+    public function logout()
+    {
+        try {
+            Auth::logout();
+            return $this->successResponse(null, 200, "Successfully");
+        } catch (\Throwable $e) {
+            $result = [
+                'status' => $e->getCode(),
+                'message' => $e->getMessage()
+            ];
+            return $this->errorResponse($result['message'], 500);
+        }
+    }
 }

@@ -30,6 +30,7 @@ Route::prefix('/V1')->group(function () {
         Route::post('/register', 'register')->name('register');
         Route::post('/verification', 'verification')->name('verification');
         Route::get('/refresh-token', 'refreshToken')->name('refreshToken')->middleware('refresh.jwt');
+        Route::delete('/logout', 'logout')->name('logout')->middleware('auth.jwt');
     });
     Route::middleware('auth.jwt')->controller(UserController::class)->prefix('/user')->group(function () {
         Route::get('/profile', 'profile')->name('profile');
