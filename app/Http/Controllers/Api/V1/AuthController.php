@@ -3,15 +3,13 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
-use App\Mail\SendMailVerification;
 use App\Services\Auth\AuthServices;
-use App\Services\Email\SendEmailServices;
 use App\Services\Token\GenerateTokenServices;
 use App\Services\Token\VerifyTokenServices;
 use App\Services\Upload\UploadServices;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -28,7 +26,6 @@ class AuthController extends Controller
     }
     public function register(RegisterRequest $request)
     {
-
         $data = $request->only('username', 'password', 'email');
         $data['avatar'] = $this->uploadServices->singleUpload("assets/files/img/avatar", $request->file('avatar'));
         $token = $this->generateTokenServices->accessToken($data);
@@ -41,8 +38,8 @@ class AuthController extends Controller
         return $this->authServices->verification($token);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        
+        return $this->authServices->login($request->all());
     }
 }
