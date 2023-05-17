@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Traits;
+
+trait ApiResponse
+{
+
+    protected function successResponse($data = null, int $code = 200, String $message = null, array $meta = [])
+    {
+        $response = [
+            'status' => 'success',
+            'message' => $message,
+            'data' => $data,
+        ];
+        if (!empty($meta)) {
+            $response['meta'] = $meta;
+        }
+        return response()->json($response, $code);
+    }
+
+    protected function errorResponse(String $message, int $code = 500, $error = null, String $customCode = null)
+    {
+        $response = [
+            'status' => 'error',
+            'message' => $message,
+            'errors' => $error,
+            'code' => $customCode
+        ];
+        return response()->json($response, $code);
+    }
+}
