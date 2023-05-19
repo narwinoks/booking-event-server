@@ -5,4 +5,6 @@ namespace App\Interfaces;
 interface EventInterface
 {
     public function getEvent($request);
+    public function showEvent($slug);
+    public function getLocation();
 }

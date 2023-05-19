@@ -36,4 +36,16 @@ class EventRepository implements EventInterface
         $events->with('ticket');
         return $events->paginate(6);
     }
+
+    public function showEvent($slug)
+    {
+        $event = Event::with('ticket')->where('slug', $slug)->first();
+        return $event;
+    }
+
+    public function getLocation()
+    {
+        $location = Event::select('id', 'location')->groupBy('id', 'location')->orderByRaw('COUNT(*) DESC')->limit(6)->get();
+        return $location;
+    }
 }

@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
 {
@@ -12,6 +14,9 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $model = new Category();
+        $model->name = "Music";
+        $model->slug = Str::slug("Music");
+        $model->save();
     }
 }

@@ -18,4 +18,9 @@ class EventController extends Controller
     {
         return $this->eventServices->getEvents($request);
     }
+
+    public function show($slug)
+    {
+        return $this->eventServices->showEvent($slug);
+    }
 }

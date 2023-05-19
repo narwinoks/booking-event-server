@@ -20,4 +20,10 @@ class EventServices
         $data = $this->eventInterface->getEvent($request);
         return new EventsCollection($data);
     }
+
+    public function showEvent($slug)
+    {
+        $data = $this->eventInterface->showEvent($slug);
+        return $data;
+    }
 }
