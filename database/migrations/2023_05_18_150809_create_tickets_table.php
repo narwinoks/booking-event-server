@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignIdFor(Event::class);
             $table->string('name');
             $table->decimal('price', 8, 0);
+            $table->integer('stock')->nullable();
+            $table->integer('sold')->nullable();
             $table->timestamps();
         });
     }

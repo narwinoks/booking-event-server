@@ -27,7 +27,11 @@ class EventFactory extends Factory
             'location' => $faker->city(),
             'description' => $faker->paragraph(4),
             'image' => "400x300.png",
-            'category_id' => $faker->randomElement($categories)
+            'category_id' => $faker->randomElement($categories),
+            'highlight' => '<li>Festival musik kolaboratif di Surabaya yang akan menampilkan berbagai musisi tanah air terkemuka, mulai dari D’Masiv, Armada, Yura, Nadin Amizah, dan banyak lagi yang akan segera diumumkan!</li>
+            <li>Konser offline.</li>
+            <li>Cocok Untuk: Geng Asyik.</li>',
+            'other' => '<li>Wajib sudah melakukan vaksin dan terdaftar di aplikasi PeduliLindungi.</li>'
         ];
     }
 }
