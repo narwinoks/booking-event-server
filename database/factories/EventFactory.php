@@ -23,10 +23,11 @@ class EventFactory extends Factory
         $categories = [1, 2, 3, 4, 5];
         return [
             'name' => "Event " . Str::upper(Str::random(2)),
+            'slug' => Str::slug("Event " . Str::upper(Str::random(2)), "-"),
             'date' => $faker->dateTimeBetween('now', '+2 months')->format('d-m-Y'),
             'location' => $faker->city(),
             'description' => $faker->paragraph(4),
-            'image' => "400x300.png",
+            'thumbnail' => "400x300.png",
             'category_id' => $faker->randomElement($categories),
             'highlight' => '<li>Festival musik kolaboratif di Surabaya yang akan menampilkan berbagai musisi tanah air terkemuka, mulai dari D’Masiv, Armada, Yura, Nadin Amizah, dan banyak lagi yang akan segera diumumkan!</li>
             <li>Konser offline.</li>

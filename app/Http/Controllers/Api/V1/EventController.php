@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GetEventRequest;
 use App\Services\Events\EventServices;
 use Illuminate\Http\Request;
 
@@ -13,8 +14,8 @@ class EventController extends Controller
     {
         $this->eventServices = $eventServices;
     }
-    public function index(Request $request)
+    public function index(GetEventRequest $request)
     {
-        return $this->eventServices->getEvents($request->all());
+        return $this->eventServices->getEvents($request);
     }
 }
