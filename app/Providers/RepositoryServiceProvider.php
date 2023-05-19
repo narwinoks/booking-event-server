@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Interfaces\EventInterface;
 use App\Interfaces\UserInterface;
+use App\Repositories\EventRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,6 +18,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             UserInterface::class,
             UserRepository::class
+        );
+        $this->app->bind(
+            EventInterface::class,
+            EventRepository::class
         );
     }
 

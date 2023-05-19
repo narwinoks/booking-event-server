@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     {
         $model = new User();
         $model->username = "winarno12";
-        $model->email = "win@gamil.com";
+        $model->email = "win@gmail.com";
         $model->password = Hash::make("password");
         $model->role = UserRole::USER;
         $model->avatar = "profile.png";
@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
 
         $model = new User();
         $model->username = "admin";
-        $model->email = "admin@gamil.com";
+        $model->email = "admin@gmail.com";
         $model->password = Hash::make("admin");
         $model->role = UserRole::ADMIN;
         $model->avatar = "profile.png";
