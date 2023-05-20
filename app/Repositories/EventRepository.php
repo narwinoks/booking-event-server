@@ -15,16 +15,27 @@ class EventRepository implements EventInterface
             $events->limit(6);
             $events->inRandomOrder();
         });
+        $events->when($request->get('order') && $request->get('order') == "price", function ($events) use ($request) {
+            $events->join('tickets', 'events.id', '=', 'tickets.event_id')
+                ->orderBy('tickets.price', 'asc');
+        });
+
         $events->when($request->get('location'), function ($events) use ($request) {
             $locations = explode(",", $request->get('location'));
             $events->whereIn('location', $locations);
         });
+        $events->when($request->get('order'), function ($events) use ($request) {
+            $events->orderBy($request->get('order'));
+        });
+
         $events->when($request->get('search'), function ($events) use ($request) {
             $events->where('name', 'LIKE', '%' . $request->get('search') . '%');
         });
+
         $events->when($request->get('date'), function ($events) use ($request) {
             $events->where('date', '>=', $request->get('date'));
         });
+
         $events->when($request->get('price_min') && $request->get('price_max'), function ($events) use ($request) {
             $priceMin = $request->get('price_min');
             $priceMax = $request->get('price_max');
@@ -39,7 +50,7 @@ class EventRepository implements EventInterface
 
     public function showEvent($slug)
     {
-        $event = Event::with('ticket')->where('slug', $slug)->first();
+        $event = Event::with('ticket', 'category')->where('slug', $slug)->first();
         return $event;
     }
 

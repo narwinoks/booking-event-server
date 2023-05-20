@@ -4,6 +4,7 @@ namespace App\Services\Events;
 
 use App\Http\Resources\EventResource;
 use App\Http\Resources\Events\EventsCollection;
+use App\Http\Resources\Ticket\TicketResource;
 use App\Interfaces\EventInterface;
 use App\Traits\ApiResponse;
 
@@ -24,6 +25,7 @@ class EventServices
     public function showEvent($slug)
     {
         $data = $this->eventInterface->showEvent($slug);
-        return $data;
+        $response = new TicketResource($data);
+        return $response;
     }
 }

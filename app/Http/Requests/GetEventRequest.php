@@ -23,8 +23,10 @@ class GetEventRequest extends FormRequest
     public function rules(): array
     {
         $typeRequest = ['all', 'popular'];
+        $orders = ['name', 'desc', 'date', 'price'];
         return [
-            'type' => 'in:' . implode(',', $typeRequest)
+            'type' => 'in:' . implode(',', $typeRequest),
+            'order' => 'in:' . implode(',', $orders)
         ];
     }
 
