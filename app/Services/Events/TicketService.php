@@ -3,29 +3,29 @@
 namespace App\Services\Events;
 
 use App\Http\Resources\Ticket\TicketDetailResource;
-use App\Repositories\EventRepository;
-use App\Repositories\TicketsRepository;
+use App\Interfaces\EventInterface;
+use App\Interfaces\TicketsInterface;
 use App\Traits\ApiResponse;
 
 class TicketService
 {
     use ApiResponse;
-    protected $eventRepository;
-    protected $ticketsRepository;
-    public function __construct(EventRepository $eventRepository, TicketsRepository $ticketsRepository)
+    protected $eventInterface;
+    protected $ticketsInterface;
+    public function __construct(EventInterface $eventInterface, TicketsInterface $ticketsInterface)
     {
-        $this->eventRepository = $eventRepository;
-        $this->ticketsRepository = $ticketsRepository;
+        $this->eventInterface = $eventInterface;
+        $this->ticketsInterface = $ticketsInterface;
     }
     public function getTicketBySlugEvent($request)
     {
 
         try {
             $slug = $request->get('slug');
-            $event = $this->eventRepository->showEvent($slug);
+            $event = $this->eventInterface->showEvent($slug);
             $eventId = $event->id;
             $date = $event->date;
-            $tickets = $this->ticketsRepository->getTicketByEvent($eventId);
+            $tickets = $this->ticketsInterface->getTicketByEvent($eventId);
             $ticketsData = $tickets->map(function ($ticket) use ($date) {
                 $ticket['date'] = $date;
                 return $ticket;

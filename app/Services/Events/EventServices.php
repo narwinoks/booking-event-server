@@ -2,7 +2,6 @@
 
 namespace App\Services\Events;
 
-use App\Http\Resources\EventResource;
 use App\Http\Resources\Events\EventsCollection;
 use App\Http\Resources\Ticket\TicketResource;
 use App\Interfaces\EventInterface;

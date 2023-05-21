@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\EventController;
 use App\Http\Controllers\Api\V1\LocationController;
+use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Http\Request;
@@ -41,6 +42,9 @@ Route::prefix('/V1')->group(function () {
     });
     Route::controller(TicketController::class)->prefix('tickets')->name('tickets')->group(function () {
         Route::get('/get-ticket-event', 'getTicketEvent')->name('getTicketEvent');
+    });
+    Route::middleware('auth.jwt')->controller(OrderController::class)->prefix('order')->name('order')->group(function () {
+        Route::post('/create-order', 'createOrder')->name('createOrder');
     });
     Route::controller(LocationController::class)->prefix('locations')->name('locations.')->group(function () {
         Route::get('/', 'index')->name('index');
