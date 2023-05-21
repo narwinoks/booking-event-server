@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\EventController;
 use App\Http\Controllers\Api\V1\LocationController;
+use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,9 @@ Route::prefix('/V1')->group(function () {
     Route::controller(EventController::class)->prefix('events')->name('events.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/{slug}', 'show')->name('show');
+    });
+    Route::controller(TicketController::class)->prefix('tickets')->name('tickets')->group(function () {
+        Route::get('/get-ticket-event', 'getTicketEvent')->name('getTicketEvent');
     });
     Route::controller(LocationController::class)->prefix('locations')->name('locations.')->group(function () {
         Route::get('/', 'index')->name('index');

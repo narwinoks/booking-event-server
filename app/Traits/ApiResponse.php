@@ -8,7 +8,7 @@ trait ApiResponse
     protected function successResponse($data = null, int $code = 200, String $message = null, array $meta = [])
     {
         $response = [
-            'status' => 'success',
+            'success' => true,
             'message' => $message,
             'data' => $data,
         ];
@@ -21,7 +21,7 @@ trait ApiResponse
     protected function errorResponse(String $message, int $code = 500, $error = null, String $customCode = null)
     {
         $response = [
-            'status' => 'error',
+            'success' => true,
             'message' => $message,
             'errors' => $error,
             'code' => $customCode
