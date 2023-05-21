@@ -12,22 +12,30 @@ class OrderServices
     use ApiResponse;
     protected $orderDetailInterface;
     protected $orderInterface;
-    public function __construct(OrderDetailInterface $orderDetailInterface, OrderInterface $orderInterface)
+    protected $midtransServices;
+    protected $transactionDetailServices;
+    public function __construct(OrderDetailInterface $orderDetailInterface, OrderInterface $orderInterface, MidtransServices $midtransServices, TransactionDetailServices $transactionDetailServices)
     {
         $this->orderDetailInterface = $orderDetailInterface;
         $this->orderInterface = $orderInterface;
+        $this->midtransServices = $midtransServices;
+        $this->transactionDetailServices = $transactionDetailServices;
     }
     public function createOrder($data)
     {
         // create order
-        $orderData = $data['order'];
-        $orderData['user_id'] = Auth::user()->id;
-        $orderDetailData = $data['order_items'];
-        $order = $this->orderInterface->createOrder($orderData);
-        $orderData = $this->orderDetailInterface->createOrderDetail($order->id, $orderDetailData);
+        $user                   = Auth::user();
+        $orderData              = $data['order'];
+        $orderData['user_id']   = $user->id;
+        $orderDetailData        = $data['order_items'];
+        $order                  = $this->orderInterface->createOrder($orderData);
+        $orderData              = $this->orderDetailInterface->createOrderDetail($order->id, $orderDetailData);
+        $paramsMidtrans         = $this->transactionDetailServices->makeDetailTransaction($order, $orderData, $user);
+        $snapUrl                = $this->midtransServices->getSnapshotUrl($paramsMidtrans);
+        $updated                = $this->orderInterface->updateOrder($order->id, ['snap_url' => $snapUrl]);
         $response = [
-            'order' => $order,
-            'order_detail' => $orderDetailData
+            'message'       => 'Successfully',
+            'snap_url'      => $snapUrl,
         ];
         return $response;
     }

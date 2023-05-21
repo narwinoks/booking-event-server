@@ -11,4 +11,8 @@ class TicketsRepository  implements TicketsInterface
     {
         return Ticket::where('event_id', $id)->get();
     }
+    public function getTicketById($id)
+    {
+        return Ticket::find($id);
+    }
 }

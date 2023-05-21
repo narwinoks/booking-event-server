@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('phone_number')->nullable();
-            $table->string('snap_url');
+            $table->string('snap_url')->nullable();
+            $table->json('meta_data')->nullable();
             $table->timestamps();
         });
     }

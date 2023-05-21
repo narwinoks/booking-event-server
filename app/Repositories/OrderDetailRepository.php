@@ -9,15 +9,19 @@ class OrderDetailRepository implements OrderDetailInterface
 {
     public function createOrderDetail($orderId, $data)
     {
+        $orderData = [];
         foreach ($data as $key => $orderDetail) {
-            OrderItem::create([
+            $orderData[] =  OrderItem::create([
                 'order_id' => $orderId,
+                'no_ktp' => $orderDetail['no_ktp'],
                 'ticket_id' => $orderDetail['ticket_id'],
                 'title' => $orderDetail['title'],
                 'name' => $orderDetail['name'],
                 'email' => $orderDetail['email'],
-                'phone_number' => $orderDetail['phone_number'] 
+                'phone_number' => $orderDetail['phone_number']
             ]);
         }
+
+        return $orderData;
     }
 }
