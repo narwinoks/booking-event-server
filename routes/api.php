@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\LocationController;
 use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Controllers\Api\V1\UserController;
+use App\Http\Controllers\Api\V1\WebHookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -48,6 +49,9 @@ Route::prefix('/V1')->group(function () {
     });
     Route::controller(LocationController::class)->prefix('locations')->name('locations.')->group(function () {
         Route::get('/', 'index')->name('index');
+    });
+    Route::controller(WebHookController::class)->prefix('webhook')->name('webhook.')->group(function () {
+        Route::post('/', 'webhook')->name('webhook');
     });
     Route::middleware('auth.jwt')->controller(UserController::class)->prefix('/user')->group(function () {
         Route::get('/profile', 'profile')->name('profile');

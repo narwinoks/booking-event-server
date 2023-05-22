@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone_number')->nullable();
             $table->string('snap_url')->nullable();
-            $table->json('meta_data')->nullable();
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

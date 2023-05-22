@@ -3,6 +3,7 @@
 namespace App\Services\Orders;
 
 use App\Repositories\TicketsRepository;
+use Illuminate\Support\Str;
 
 class TransactionDetailServices
 {
@@ -14,7 +15,7 @@ class TransactionDetailServices
     public function makeDetailTransaction($order, $orderData, $user)
     {
         $transactionDetails = [
-            'order_id'      => md5($order->id . "-" . time()),
+            'order_id' => $order->id . '-' . Str::random(4),
             'gross_amount'  => 200000
         ];
         $items  = [];

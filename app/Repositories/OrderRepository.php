@@ -14,7 +14,12 @@ class OrderRepository implements OrderInterface
     }
     public function updateOrder($id, $data)
     {
-        $order = Order::where('id', $id);
-        return $order->update($data);
+        $order = Order::find($id);
+        $order->update($data);
+        return;
+    }
+    public function getOrderById($id)
+    {
+        return Order::where('id', $id)->first();
     }
 }
