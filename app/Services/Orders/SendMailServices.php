@@ -2,9 +2,23 @@
 
 namespace App\Services\Orders;
 
+use App\Interfaces\TicketsInterface;
+use App\Mail\SendAttachmentEmail;
+use Illuminate\Support\Facades\Mail;
+
 class SendMailServices
 {
-    public function sendMainTicket($data)
+    protected $ticketsInterface;
+    public function __construct(TicketsInterface $ticketsInterface)
     {
+        $this->ticketsInterface = $ticketsInterface;
+    }
+    public function sendMailTicket($data)
+    {
+        $mailData = [
+            'username' => "Wins",
+            'url' => "http://localhost:8080",
+        ];
+        Mail::to($data['email'])->send(new SendAttachmentEmail($mailData));
     }
 }

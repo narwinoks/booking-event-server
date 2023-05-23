@@ -11,9 +11,11 @@ class WebhookServices
     use ApiResponse;
     protected $orderInterface;
     protected $paymentLogInterface;
-    public function __construct(OrderInterface $orderInterface, PaymentLogInterface $paymentLogInterface)
+    protected $sendMailServices;
+    public function __construct(OrderInterface $orderInterface, PaymentLogInterface $paymentLogInterface, SendMailServices $sendMailServices)
     {
         $this->orderInterface = $orderInterface;
+        $this->sendMailServices = $sendMailServices;
         $this->paymentLogInterface = $paymentLogInterface;
     }
     public function createLog($data)
@@ -77,6 +79,8 @@ class WebhookServices
             'payment_type' => $type,
         ];
         $this->paymentLogInterface->createPaymentLog($logData);
+        $test = ["name" => "name", "email" => "narnowin00@gmail.com"];
+        $this->sendMailServices->sendMailTicket($test);
         return response()->json([
             'success' => 'oke',
         ]);

@@ -23,9 +23,6 @@ class SendAttachmentEmail extends Mailable
         $this->mailData = $mailData;
     }
 
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
@@ -35,23 +32,23 @@ class SendAttachmentEmail extends Mailable
 
     public function build()
     {
-        $attachmentPath = public_path('path/to/attachment.pdf');
-        $attachmentName = 'attachment.pdf';
+        $attachment1Path = public_path('assets/files/pdf/pdf1.pdf');
+        $attachment2Path = public_path('assets/files/pdf/pdf2.pdf');
 
-        return $this->subject('Email with Attachment')
-            ->to('recipient@example.com')
-            ->attach($attachmentPath, [
-                'as' => $attachmentName,
+        return $this->from(env('MAIL_USERNAME'), env('APP_NAME'))
+            ->subject('Your Ticket')
+            ->attach($attachment1Path, [
+                'as' => 'pdf1.pdf',
                 'mime' => 'application/pdf',
             ])
-            ->view('emails.attachment');
+            ->attach($attachment2Path, [
+                'as' => 'pdf2.pdf',
+                'mime' => 'application/pdf',
+            ])
+            ->view('mail')
+            ->with($this->mailData);
     }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
     public function attachments(): array
     {
         return [];
