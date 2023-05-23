@@ -18,6 +18,7 @@ class SendMailServices
         $mailData = [
             'username' => "Wins",
             'url' => "http://localhost:8080",
+            'ticket' => $data
         ];
         Mail::to($data['email'])->send(new SendAttachmentEmail($mailData));
     }

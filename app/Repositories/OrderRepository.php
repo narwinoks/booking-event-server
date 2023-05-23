@@ -20,7 +20,7 @@ class OrderRepository implements OrderInterface
     }
     public function getOrderById($id)
     {
-        return Order::where('id', $id)->first();
+        return Order::where('id', $id)->with('orderItem')->first();
     }
     public function getOrderByUserId($userId)
     {

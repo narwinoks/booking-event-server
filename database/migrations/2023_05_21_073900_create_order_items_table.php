@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
-            // $table->foreignIdFor(Order::class);
+            $table->foreignIdFor(Order::class);
             $table->foreignIdFor(Ticket::class);
             $table->string('title');
             $table->string('name');

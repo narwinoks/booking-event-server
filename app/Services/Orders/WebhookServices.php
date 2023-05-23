@@ -78,9 +78,10 @@ class WebhookServices
             'order_id' => $realOrderId[0],
             'payment_type' => $type,
         ];
-        $this->paymentLogInterface->createPaymentLog($logData);
+
+        $$this->paymentLogInterface->createPaymentLog($logData);
         $test = ["name" => "name", "email" => "narnowin00@gmail.com"];
-        $this->sendMailServices->sendMailTicket($test);
+        $this->sendMailServices->sendMailTicket($order);
         return response()->json([
             'success' => 'oke',
         ]);

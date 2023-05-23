@@ -21,6 +21,7 @@ class SendAttachmentEmail extends Mailable
     public function __construct($mailData)
     {
         $this->mailData = $mailData;
+        dd($mailData);
     }
 
     public function envelope(): Envelope
