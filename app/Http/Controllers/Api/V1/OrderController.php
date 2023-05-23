@@ -18,4 +18,9 @@ class OrderController extends Controller
     {
         return $this->orderServices->createOrder($request->all());
     }
+
+    public function getOrder(Request $request)
+    {
+        return $this->orderServices->getOrderUser();
+    }
 }

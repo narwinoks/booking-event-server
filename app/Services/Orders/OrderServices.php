@@ -39,4 +39,19 @@ class OrderServices
         ];
         return $response;
     }
+
+    public function getOrderUser()
+    {
+        try {
+            $userId = Auth::user()->id;
+            $orders = $this->orderInterface->getOrderByUserId($userId);
+            return $this->successResponse($orders, 200, "Successfully");
+        } catch (\Throwable $e) {
+            $result = [
+                'status' => $e->getCode(),
+                'message' => $e->getMessage()
+            ];
+            return $this->errorResponse($result['message'], 500);
+        }
+    }
 }
