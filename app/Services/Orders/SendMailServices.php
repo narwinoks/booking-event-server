@@ -8,9 +8,9 @@ use App\Interfaces\TicketsInterface;
 use App\Mail\SendAttachmentEmail;
 use App\Traits\ApiResponse;
 use Dompdf\Dompdf;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 
 class SendMailServices
 {
@@ -34,7 +34,11 @@ class SendMailServices
                 $pdfContent =  $this->generatePdfFile($item->id);
                 // Save PDF to a file
                 $filename = time() . $item->id . ".pdf";
-                $this->orderDetailInterface->updateOrderItem($item->id, ['file' => $filename]);
+                $updateOrderItem = [
+                    'code' => Str::random(8),
+                    'file' => $filename
+                ];
+                $this->orderDetailInterface->updateOrderItem($item->id, $updateOrderItem);
                 $pdfPath = public_path('assets/files/pdf/' . $filename);
                 file_put_contents($pdfPath, $pdfContent);
             }
