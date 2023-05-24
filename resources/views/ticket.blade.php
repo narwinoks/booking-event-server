@@ -59,11 +59,11 @@
     <div class="ticket">
         <div class="ticket-header">
             <div class="ticket-title">Event Name: {{ $title }}</div>
-            <div class="ticket-info">Created on: May 23, 2023</div>
+            <div class="ticket-info">Created on: {{ $date }}</div>
         </div>
         <div class="ticket-content">
             <p>
-                <strong>Ticket Category:</strong> Technical Support
+                <strong>Ticket Category:</strong> {{ $name }}
             </p>
             <p>
                 <strong>Description:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer gravida
@@ -72,7 +72,7 @@
         </div>
         <div class="ticket-details">
             <p>
-                <strong>Assigned To:</strong> John Doe
+                <strong>Assigned To:</strong> {{ $name }}
             </p>
             <p>
                 <strong>Due Date:</strong> June 1, 2023
@@ -80,9 +80,6 @@
             <p>
                 <strong>Priority:</strong> High
             </p>
-        </div>
-        <div class="qr-code">
-            <img src="{{ asset('assets/files/pdf/pdf.png') }}" alt="QR Code" width="200" height="200">
         </div>
     </div>
 </body>

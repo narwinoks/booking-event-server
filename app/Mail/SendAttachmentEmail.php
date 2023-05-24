@@ -21,32 +21,27 @@ class SendAttachmentEmail extends Mailable
     public function __construct($mailData)
     {
         $this->mailData = $mailData;
-        dd($mailData);
-    }
-
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Send Attachment Email',
-        );
     }
 
     public function build()
     {
-        $attachment1Path = public_path('assets/files/pdf/pdf1.pdf');
-        $attachment2Path = public_path('assets/files/pdf/pdf2.pdf');
+        $attachmentPaths = [];
+        // Loop through each ticket in mailData
+        foreach ($this->mailData['order']['orderItem'] as $ticket) {
+            // Assuming the file paths are stored in the 'file_path' key of each ticket
+            $filePath = public_path('assets/files/pdf/' . $ticket['file']);
+            // Add the attachment path to the array
+            $attachmentPaths[] = $filePath;
+            // Attach the file to the email
+            $this->attach($filePath, [
+                'as' => $ticket['file'],
+                'mime' => 'application/pdf',
+            ]);
+        }
 
         return $this->from(env('MAIL_USERNAME'), env('APP_NAME'))
-            ->subject('Your Ticket')
-            ->attach($attachment1Path, [
-                'as' => 'pdf1.pdf',
-                'mime' => 'application/pdf',
-            ])
-            ->attach($attachment2Path, [
-                'as' => 'pdf2.pdf',
-                'mime' => 'application/pdf',
-            ])
-            ->view('mail')
+            ->subject('Your Ticket Booking')
+            ->view('mail.sendTicket')
             ->with($this->mailData);
     }
 

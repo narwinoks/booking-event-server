@@ -24,4 +24,10 @@ class OrderDetailRepository implements OrderDetailInterface
 
         return $orderData;
     }
+
+    public function updateOrderItem($id, $data)
+    {
+        $orderItem = OrderItem::find($id);
+        return $orderItem->update($data);
+    }
 }

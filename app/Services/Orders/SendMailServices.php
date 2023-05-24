@@ -16,31 +16,34 @@ class SendMailServices
     use ApiResponse;
     protected $ticketsInterface;
     protected $orderInterface;
+    protected $orderDetailInterface;
     public function __construct(TicketsInterface $ticketsInterface, OrderInterface $orderInterface, OrderDetailInterface $orderDetailInterface)
     {
         $this->ticketsInterface = $ticketsInterface;
         $this->orderInterface = $orderInterface;
-        
+        $this->orderDetailInterface = $orderDetailInterface;
     }
     public function sendMailTicket($orderId)
     {
         try {
             $order = $this->orderInterface->getOrderWithDetailTicket($orderId);
-            $mailData = [
-                'username' => "Wins",
-                'url' => "http://localhost:8080",
-                'ticket' => $order->orderItem
-            ];
+
             // generate pdf 
             foreach ($order->orderItem as $key => $item) {
                 $pdfContent =  $this->generatePdfFile($item->ticket_id, $item->name, $item->name, $item->created_at);
                 // Save PDF to a file
                 $filename = time() . $item->id . ".pdf";
+                $updateOrder = $this->orderDetailInterface->updateOrderItem($item->id, ['file' => $filename]);
                 $pdfPath = public_path('assets/files/pdf/' . $filename);
                 file_put_contents($pdfPath, $pdfContent);
-                echo "<br />" . $item->id . "<br/>" . $filename . "<br/>";
             }
-            // Mail::to($order->email)->send(new SendAttachmentEmail($mailData));
+
+            $mailData = [
+                'username' => $order->email,
+                'url' => "http://localhost:8080",
+                'order' => $order
+            ];
+            Mail::to($order->email)->send(new SendAttachmentEmail($mailData));
         } catch (\Throwable $e) {
             $result = [
                 'status' => $e->getCode(),
