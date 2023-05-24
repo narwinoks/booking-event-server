@@ -78,9 +78,9 @@ class WebhookServices
             'order_id' => $realOrderId[0],
             'payment_type' => $type,
         ];
-        return  $this->sendMailServices->sendMailTicket($order->id);
 
         try {
+            $this->sendMailServices->sendMailTicket($order->id);
             $this->paymentLogInterface->createPaymentLog($logData);
         } catch (\Throwable $e) {
             $result = [
@@ -89,10 +89,9 @@ class WebhookServices
             ];
             return $this->errorResponse($result['message'], 500);
         }
-        // $test = ["name" => "name", "email" => "narnowin00@gmail.com"];
 
         return response()->json([
-            'success' => 'oke',
+            'success' => 'successfully',
         ]);
     }
 }

@@ -8,6 +8,7 @@ use App\Interfaces\TicketsInterface;
 use App\Mail\SendAttachmentEmail;
 use App\Traits\ApiResponse;
 use Dompdf\Dompdf;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
 
@@ -30,17 +31,15 @@ class SendMailServices
 
             // generate pdf 
             foreach ($order->orderItem as $key => $item) {
-                $pdfContent =  $this->generatePdfFile($item->ticket_id, $item->name, $item->name, $item->created_at);
+                $pdfContent =  $this->generatePdfFile($item->id);
                 // Save PDF to a file
                 $filename = time() . $item->id . ".pdf";
-                $updateOrder = $this->orderDetailInterface->updateOrderItem($item->id, ['file' => $filename]);
+                $this->orderDetailInterface->updateOrderItem($item->id, ['file' => $filename]);
                 $pdfPath = public_path('assets/files/pdf/' . $filename);
                 file_put_contents($pdfPath, $pdfContent);
             }
 
             $mailData = [
-                'username' => $order->email,
-                'url' => "http://localhost:8080",
                 'order' => $order
             ];
             Mail::to($order->email)->send(new SendAttachmentEmail($mailData));
@@ -53,16 +52,10 @@ class SendMailServices
         }
     }
 
-    protected function generatePdfFile($title, $subtitle, $name, $date)
+    protected function generatePdfFile($id)
     {
-        $data = [
-            'title' => $title,
-            'subtitle' => $subtitle,
-            'name' => $name,
-            'date' => $date,
-        ];
-
-        $pdfContent = View::make('ticket', $data)->render();
+        $data = $this->orderDetailInterface->getOrderDetailWithOrderTicket($id);
+        $pdfContent = View::make('ticket', ['data' => $data])->render();
 
         $dompdf = new Dompdf();
         $dompdf->loadHtml($pdfContent);

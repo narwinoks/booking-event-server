@@ -30,4 +30,10 @@ class OrderDetailRepository implements OrderDetailInterface
         $orderItem = OrderItem::find($id);
         return $orderItem->update($data);
     }
+
+    public function getOrderDetailWithOrderTicket($id)
+    {
+        $data = OrderItem::with('order', 'ticket.event')->where('id', $id)->first();
+        return $data;
+    }
 }

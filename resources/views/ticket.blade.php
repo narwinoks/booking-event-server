@@ -58,12 +58,12 @@
 <body>
     <div class="ticket">
         <div class="ticket-header">
-            <div class="ticket-title">Event Name: {{ $title }}</div>
-            <div class="ticket-info">Created on: {{ $date }}</div>
+            <div class="ticket-title">Event Name: {{ $data->ticket->event->name }} # {{ $data->code }}</div>
+            <div class="ticket-info">Created on: {{ $data->order->created_at }}</div>
         </div>
         <div class="ticket-content">
             <p>
-                <strong>Ticket Category:</strong> {{ $name }}
+                <strong>Ticket Category:</strong> {{ $data->ticket->name }}
             </p>
             <p>
                 <strong>Description:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer gravida
@@ -72,16 +72,21 @@
         </div>
         <div class="ticket-details">
             <p>
-                <strong>Assigned To:</strong> {{ $name }}
+                <strong>Assigned To:</strong> {{ $data->name }}
             </p>
             <p>
-                <strong>Due Date:</strong> June 1, 2023
+                <strong>Due Date:</strong>
+                {{ date('d M Y', strtotime($data->ticket->event->date)) }}
             </p>
             <p>
                 <strong>Priority:</strong> High
             </p>
         </div>
     </div>
+
+    @php
+        // dd($data);
+    @endphp
 </body>
 
 </html>
