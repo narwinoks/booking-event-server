@@ -71,17 +71,26 @@ class WebhookServices
             $orderUpdate['status'] = 'pending';
         }
 
-        $this->orderInterface->updateOrder($order->id, $orderUpdate);
+        // $this->orderInterface->updateOrder($order->id, $orderUpdate);
         $logData = [
             'status' => $transactionStatus,
             'raw_response' => json_encode($data),
             'order_id' => $realOrderId[0],
             'payment_type' => $type,
         ];
+        return  $this->sendMailServices->sendMailTicket($order->id);
 
-        $$this->paymentLogInterface->createPaymentLog($logData);
-        $test = ["name" => "name", "email" => "narnowin00@gmail.com"];
-        $this->sendMailServices->sendMailTicket($order);
+        try {
+            $this->paymentLogInterface->createPaymentLog($logData);
+        } catch (\Throwable $e) {
+            $result = [
+                'status' => $e->getCode(),
+                'message' => $e->getMessage()
+            ];
+            return $this->errorResponse($result['message'], 500);
+        }
+        // $test = ["name" => "name", "email" => "narnowin00@gmail.com"];
+
         return response()->json([
             'success' => 'oke',
         ]);

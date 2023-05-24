@@ -58,7 +58,7 @@
 <body>
     <div class="ticket">
         <div class="ticket-header">
-            <div class="ticket-title">Event Name: My Event</div>
+            <div class="ticket-title">Event Name: {{ $title }}</div>
             <div class="ticket-info">Created on: May 23, 2023</div>
         </div>
         <div class="ticket-content">

@@ -8,4 +8,5 @@ interface OrderInterface
     public function updateOrder($id, $data);
     public function getOrderById($id);
     public function getOrderByUserId($userId);
+    public function getOrderWithDetailTicket($orderId);
 }

@@ -25,25 +25,37 @@ class WebHookController extends Controller
 
     public function midtransHandler(Request $request)
     {
-        $data = $request->all();
-        $signatureKey = $data['signature_key'];
-        $orderId = $data['order_id'];
-        $statusCode = $data['status_code'];
-        $grossAmount = $data['gross_amount'];
-        $serverKey = env('MIDTRANS_SERVER_KEY');
+        try {
+            //code...
+            $data = $request->all();
+            $signatureKey = $data['signature_key'];
+            $orderId = $data['order_id'];
+            $statusCode = $data['status_code'];
+            $grossAmount = $data['gross_amount'];
+            $serverKey = env('MIDTRANS_SERVER_KEY');
 
-        $mySignature = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
-        $transactionStatus = $data['transaction_status'];
-        $type = $data['payment_type'];
-        $fraudStatus = $data['fraud_status'];
+            $mySignature = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
+            $transactionStatus = $data['transaction_status'];
+            $type = $data['payment_type'];
+            $fraudStatus = $data['fraud_status'];
 
-        // dd(json_encode($data));
+            // dd(json_encode($data));
 
-        if ($signatureKey !== $mySignature) {
+            if ($signatureKey !== $mySignature) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Invalid Signature Key'
+                ], Response::HTTP_BAD_REQUEST);
+            }
             return response()->json([
-                'status' => 'error',
-                'message' => 'Invalid Signature Key'
-            ], Response::HTTP_BAD_REQUEST);
+                'success' => 'oke',
+            ]);
+        } catch (\Throwable $e) {
+            $result = [
+                'status' => $e->getCode(),
+                'message' => $e->getMessage()
+            ];
+            return $this->errorResponse($result['message'], 500);
         }
 
         // // check order id on database
@@ -116,8 +128,6 @@ class WebHookController extends Controller
         //     // ]);
         // }
 
-        return response()->json([
-            'success' => 'oke',
-        ]);
+
     }
 }
