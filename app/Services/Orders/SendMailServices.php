@@ -6,6 +6,7 @@ use App\Interfaces\OrderDetailInterface;
 use App\Interfaces\OrderInterface;
 use App\Interfaces\TicketsInterface;
 use App\Mail\SendAttachmentEmail;
+use App\Services\Events\TicketService;
 use App\Traits\ApiResponse;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Mail;
@@ -18,11 +19,13 @@ class SendMailServices
     protected $ticketsInterface;
     protected $orderInterface;
     protected $orderDetailInterface;
-    public function __construct(TicketsInterface $ticketsInterface, OrderInterface $orderInterface, OrderDetailInterface $orderDetailInterface)
+    protected $ticketService;
+    public function __construct(TicketsInterface $ticketsInterface, OrderInterface $orderInterface, OrderDetailInterface $orderDetailInterface, TicketService $ticketService)
     {
         $this->ticketsInterface = $ticketsInterface;
         $this->orderInterface = $orderInterface;
         $this->orderDetailInterface = $orderDetailInterface;
+        $this->ticketService = $ticketService;
     }
     public function sendMailTicket($orderId)
     {
@@ -38,6 +41,7 @@ class SendMailServices
                     'code' => Str::random(8),
                     'file' => $filename
                 ];
+                // update order detail
                 $this->orderDetailInterface->updateOrderItem($item->id, $updateOrderItem);
                 $pdfPath = public_path('assets/files/pdf/' . $filename);
                 file_put_contents($pdfPath, $pdfContent);
@@ -46,8 +50,12 @@ class SendMailServices
             $mailData = [
                 'order' => $order
             ];
+            // update tickets
+            $this->ticketService->updateSoldTicket($order->orderItem[0]->id,  count($order->OrderItem));
+            // send mail notification
             Mail::to($order->email)->send(new SendAttachmentEmail($mailData));
         } catch (\Throwable $e) {
+            // trow error exception
             $result = [
                 'status' => $e->getCode(),
                 'message' => $e->getMessage()

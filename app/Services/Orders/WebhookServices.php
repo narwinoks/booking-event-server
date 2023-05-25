@@ -71,7 +71,7 @@ class WebhookServices
             $orderUpdate['status'] = 'pending';
         }
 
-        // $this->orderInterface->updateOrder($order->id, $orderUpdate);
+        $this->orderInterface->updateOrder($order->id, $orderUpdate);
         $logData = [
             'status' => $transactionStatus,
             'raw_response' => json_encode($data),

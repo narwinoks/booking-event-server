@@ -40,4 +40,16 @@ class TicketService
             return $this->errorResponse($result['message'], 500);
         }
     }
+    public function updateSoldTicket($id, $sold)
+    {
+        try {
+            $this->ticketsInterface->updateTicketSoldOut($id, $sold);
+        } catch (\Throwable $e) {
+            $result = [
+                'status' => $e->getCode(),
+                'message' => $e->getMessage()
+            ];
+            return $this->errorResponse($result['message'], 500);
+        }
+    }
 }

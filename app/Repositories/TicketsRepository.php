@@ -15,4 +15,17 @@ class TicketsRepository  implements TicketsInterface
     {
         return Ticket::find($id);
     }
+    public function update($id, $data)
+    {
+        $ticket = Ticket::find($id);
+        return $ticket->update($data);
+    }
+
+    public function updateTicketSoldOut($id, $sold)
+    {
+        $ticket = Ticket::find($id);
+        $ticket->sold += $sold;
+        $ticket->save();
+        return $ticket;
+    }
 }
