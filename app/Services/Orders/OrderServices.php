@@ -2,6 +2,7 @@
 
 namespace App\Services\Orders;
 
+use App\Http\Resources\Orders\UserOrderResource;
 use App\Interfaces\OrderDetailInterface;
 use App\Interfaces\OrderInterface;
 use App\Traits\ApiResponse;
@@ -45,7 +46,8 @@ class OrderServices
         try {
             $userId = Auth::user()->id;
             $orders = $this->orderInterface->getOrderByUserId($userId);
-            return $this->successResponse($orders, 200, "Successfully");
+            $response = UserOrderResource::collection($orders);
+            return $this->successResponse($response, 200, "Successfully");
         } catch (\Throwable $e) {
             $result = [
                 'status' => $e->getCode(),

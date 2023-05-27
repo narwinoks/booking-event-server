@@ -14,6 +14,10 @@ class UserOrderResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'event_name' => $this->orderItem[0]->ticket->name ?? null,
+            'status' => $this->status
+        ];
     }
 }

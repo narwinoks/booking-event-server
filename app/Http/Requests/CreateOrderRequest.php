@@ -23,9 +23,14 @@ class CreateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'order.title' => 'required',
+            // 'order.title' => 'required',
             'order.name' => 'required',
-            'order.email' => 'required|email'
+            'order.email' => 'required|email',
+            // 'order_items.ticket_id' => 'required',
+            // 'order_items.name' => 'required',
+            // 'order_items.email' => 'required',
+            // 'order_items.no_ktp' => 'required',
+            // 'order_items.quantity' => 'required',
         ];
     }
 

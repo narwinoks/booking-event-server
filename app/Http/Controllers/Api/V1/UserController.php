@@ -18,4 +18,8 @@ class UserController extends Controller
     {
         return $this->userServices->getUser();
     }
+
+    public function updateAvatar(Request $request)
+    {
+    }
 }

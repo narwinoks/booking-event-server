@@ -24,7 +24,7 @@ class OrderRepository implements OrderInterface
     }
     public function getOrderByUserId($userId)
     {
-        return Order::where('user_id', $userId)->get();
+        return Order::where('user_id', $userId)->with('orderItem.ticket.event')->get();
     }
     public function getOrderWithDetailTicket($orderId)
     {
