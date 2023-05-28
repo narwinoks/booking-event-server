@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\EventInterface;
 use App\Models\Event;
+use App\Models\Ticket;
 
 class EventRepository implements EventInterface
 {
@@ -58,5 +59,11 @@ class EventRepository implements EventInterface
     {
         $location = Event::select('id', 'location')->groupBy('id', 'location')->orderByRaw('COUNT(*) DESC')->limit(6)->get();
         return $location;
+    }
+
+    public function getEventByTicket($ticketId)
+    {
+        $event = Ticket::with('event')->where('id', $ticketId)->first();
+        return $event;
     }
 }

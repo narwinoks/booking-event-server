@@ -23,4 +23,9 @@ class EventController extends Controller
     {
         return $this->eventServices->showEvent($slug);
     }
+
+    public function getEventByTicket(Request $request, $ticketId)
+    {
+        return $this->eventServices->getEventByTicket($ticketId);
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Services\Events;
 
 use App\Http\Resources\Events\EventsCollection;
 use App\Http\Resources\Ticket\TicketResource;
+use App\Http\Resources\TicketEventResource;
 use App\Interfaces\EventInterface;
 use App\Traits\ApiResponse;
 
@@ -26,5 +27,23 @@ class EventServices
         $data = $this->eventInterface->showEvent($slug);
         $response = new TicketResource($data);
         return $response;
+    }
+
+    public function getEventByTicket($ticketId)
+    {
+        try {
+            $event = $this->eventInterface->getEventByTicket($ticketId);
+            if ($event) {
+                return $this->successResponse(new TicketEventResource($event), 200, "successfully");
+            } else {
+                return $this->errorResponse("data not found", 404);
+            }
+        } catch (\Throwable $e) {
+            $result = [
+                'status' => $e->getCode(),
+                'message' => $e->getMessage()
+            ];
+            return $this->errorResponse($result['message'], 500);
+        }
     }
 }
