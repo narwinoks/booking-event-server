@@ -56,5 +56,6 @@ Route::prefix('/V1')->group(function () {
     });
     Route::middleware('auth.jwt')->controller(UserController::class)->prefix('/user')->group(function () {
         Route::get('/profile', 'profile')->name('profile');
+        Route::post('/change-avatar', 'updateAvatar')->name('changeAvatar');
     });
 });
