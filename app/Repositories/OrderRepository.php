@@ -22,12 +22,16 @@ class OrderRepository implements OrderInterface
     {
         return Order::where('id', $id)->first();
     }
-    public function getOrderByUserId($userId)
+    public function getOrderByUserId($userId, $startDate, $endDate)
     {
-        return Order::where('user_id', $userId)->with('orderItem.ticket.event')->get();
+        return Order::where('user_id', $userId)->with('orderItem.ticket.event')->whereBetween('created_at', [$startDate, $endDate])->get();
     }
     public function getOrderWithDetailTicket($orderId)
     {
         return Order::where('id', $orderId)->with('orderItem')->first();
+    }
+    public function getOrderItem($orderId)
+    {
+        return Order::where('id', $orderId)->with('orderItem.ticket')->get();
     }
 }

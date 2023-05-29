@@ -48,6 +48,7 @@ Route::prefix('/V1')->group(function () {
     Route::middleware('auth.jwt')->controller(OrderController::class)->prefix('order')->name('order')->group(function () {
         Route::post('/create-order', 'createOrder')->name('createOrder');
         Route::get('/get-order-user', 'getOrder')->name('getOrder');
+        Route::get('/get-order-detail/{orderId}', 'getOrderUserDetail')->name('getOrderDetail');
     });
     Route::controller(LocationController::class)->prefix('locations')->name('locations.')->group(function () {
         Route::get('/', 'index')->name('index');

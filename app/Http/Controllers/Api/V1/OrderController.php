@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateOrderRequest;
+use App\Http\Requests\GetOrderRequest;
 use App\Services\Orders\OrderServices;
 use Illuminate\Http\Request;
 
@@ -19,8 +20,12 @@ class OrderController extends Controller
         return $this->orderServices->createOrder($request->all());
     }
 
-    public function getOrder(Request $request)
+    public function getOrder(GetOrderRequest $request)
     {
-        return $this->orderServices->getOrderUser();
+        return $this->orderServices->getOrderUser($request);
+    }
+    public function getOrderUserDetail(Request $request, $orderId)
+    {
+        return $this->orderServices->getOrderUserDetail($orderId);
     }
 }

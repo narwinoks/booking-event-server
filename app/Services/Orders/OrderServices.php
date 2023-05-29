@@ -2,6 +2,7 @@
 
 namespace App\Services\Orders;
 
+use App\Http\Resources\Orders\UserOrderDetailResource;
 use App\Http\Resources\Orders\UserOrderResource;
 use App\Interfaces\OrderDetailInterface;
 use App\Interfaces\OrderInterface;
@@ -41,12 +42,28 @@ class OrderServices
         return $response;
     }
 
-    public function getOrderUser()
+    public function getOrderUser($request)
     {
         try {
+            $startDate = $request->get('startDate');
+            $endDate = $request->get('endDate');
             $userId = Auth::user()->id;
-            $orders = $this->orderInterface->getOrderByUserId($userId);
+            $orders = $this->orderInterface->getOrderByUserId($userId, $startDate, $endDate);
             $response = UserOrderResource::collection($orders);
+            return $this->successResponse($response, 200, "Successfully");
+        } catch (\Throwable $e) {
+            $result = [
+                'status' => $e->getCode(),
+                'message' => $e->getMessage()
+            ];
+            return $this->errorResponse($result['message'], 500);
+        }
+    }
+    public function getOrderUserDetail($orderId)
+    {
+        try {
+            $data = $this->orderInterface->getOrderItem($orderId);
+            $response = UserOrderDetailResource::collection($data);
             return $this->successResponse($response, 200, "Successfully");
         } catch (\Throwable $e) {
             $result = [
