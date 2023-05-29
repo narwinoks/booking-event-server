@@ -16,17 +16,20 @@ class EventRepository implements EventInterface
             $events->limit(6);
             $events->inRandomOrder();
         });
-        $events->when($request->get('order') && $request->get('order') == "price", function ($events) use ($request) {
-            $events->join('tickets', 'events.id', '=', 'tickets.event_id')
-                ->orderBy('tickets.price', 'asc');
-        });
+        $events->when($request->get('order') == "price", function ($events) use ($request) {
+            $events->whereHas('ticket', function ($query) {
+                $query->orderBy('tickets.price', 'asc');
+            });
+        })->with('ticket');
 
         $events->when($request->get('location'), function ($events) use ($request) {
             $locations = explode(",", $request->get('location'));
             $events->whereIn('location', $locations);
         });
         $events->when($request->get('order'), function ($events) use ($request) {
-            $events->orderBy($request->get('order'));
+            if ($request->get('order') == "date" || $request->get('order') == "name") {
+                $events->orderBy($request->get('order'));
+            }
         });
 
         $events->when($request->get('search'), function ($events) use ($request) {
