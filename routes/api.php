@@ -59,5 +59,6 @@ Route::prefix('/V1')->group(function () {
         Route::get('/profile', 'profile')->name('profile');
         Route::post('/change-avatar', 'updateAvatar')->name('changeAvatar');
         Route::put('/change-password', 'changePassword')->name('changePassword');
+        Route::put('/change-profile', 'changeProfile')->name('changeProfile');
     });
 });

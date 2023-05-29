@@ -65,4 +65,18 @@ class UserServices
             return $this->errorResponse($result['message'], 500);
         }
     }
+    public function changeProfile($data)
+    {
+        try {
+            $userId = Auth::user()->id;
+            $response = $this->userInterface->update($userId, $data);
+            return $this->successResponse(new AuthResource($response), 200, "Successfully");
+        } catch (\Throwable $e) {
+            $result = [
+                'status' => $e->getCode(),
+                'message' => $e->getMessage()
+            ];
+            return $this->errorResponse($result['message'], 500);
+        }
+    }
 }

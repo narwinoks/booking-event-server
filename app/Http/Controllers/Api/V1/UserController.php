@@ -23,6 +23,11 @@ class UserController extends Controller
         return $this->userServices->getUser();
     }
 
+    public function changeProfile(Request $request)
+    {
+        $data = $request->only('username');
+        return $this->userServices->changeProfile($data);
+    }
     public function updateAvatar(UpdateProfileRequest $request)
     {
         $user           = Auth::user();
