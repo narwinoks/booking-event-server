@@ -1,66 +1,116 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Booking App Portfolio
 
-## About Laravel
+Booking App with laravel 10 , Postgresql Database and Midtrans Payment gatway.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Made By
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [@winarno](https://www.github.com/narnowinoks)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Responsive web
+- Login Register user with verification Email
+- List event and multi filter
+- Order and order item
+- webook  payment gatway
+- Sent Ticket to email with webook midtrans
+- Pdf generate ticket
+- Admin Dashboard (comming son)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Environment Variables
 
-## Laravel Sponsors
+To run this project, you will need to add the following environment variables to your .env file
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+    `Database Conntection`
 
-### Premium Partners
+            `DB_CONNECTION = <DB_CONNECTION>`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+            `DB_HOST = <DB_HOST>`
 
-## Contributing
+            `DB_PORT = <DB_PORT>`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+            `DB_DATABASE = <DB_DATABASE>`
 
-## Code of Conduct
+            `DB_USERNAME = <DB_USERNAME>`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+            `DB_PASSWORD = <DB_PASSWORD>`
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    `Mail Setting`
+    
+            `MAIL_MAILER = <MAIL_MAILER>`
 
-## License
+            `MAIL_HOST = <MAIL_HOST>`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+            `MAIL_PORT = <MAIL_PORT>`
+
+            `MAIL_USERNAME = <MAIL_USERNAME>`
+
+            `MAIL_PASSWORD = <MAIL_PASSWORD>`
+
+            `MAIL_ENCRYPTION = <MAIL_ENCRYPTION>`
+
+            `MAIL_FROM_ADDRESS = <MAIL_FROM_ADDRESS>`
+
+            `MAIL_FROM_NAME = <MAIL_FROM_NAME>`
+
+
+    JWT Setting
+    
+            `JWT_ACCESS_TOKEN_SECRET = <JWT_ACCESS_TOKEN_SECRET>`
+
+            `JWT_REFRESH_TOKEN_SECRET = <JWT_REFRESH_TOKEN_SECRET>`
+
+            `ACCESS_TOKEN_EXPIRED = <ACCESS_TOKEN_EXPIRED>`
+
+            `REFRESH_TOKEN_EXPIRED = <REFRESH_TOKEN_EXPIRED>`
+
+
+
+    JWT Setting
+    
+            `MIDTRANS_SERVER_KEY = <MIDTRANS_SERVER_KEY>`
+
+            `MIDTRANS_PRODUCTION = <MIDTRANS_PRODUCTION>`
+
+            `MIDTRANS_3DS = <MIDTRANS_3DS>`
+
+    Frontend URL
+    
+            `FRONTEND_URL = <FRONTEND_URL>/activation`
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/narwinoks/booking-event-server
+```
+
+Go to the project directory
+
+```bash
+  cd my-project
+```
+
+Install dependencies
+
+```bash
+  composer install
+```
+
+Migrate and seed dummy data
+
+```bash
+  php artisan migrate:fresh --seed
+```
+
+Run Server
+
+```bash
+  php artisan serve
+```
+
