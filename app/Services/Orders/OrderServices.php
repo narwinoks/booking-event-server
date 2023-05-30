@@ -7,6 +7,7 @@ use App\Http\Resources\Orders\UserOrderResource;
 use App\Interfaces\OrderDetailInterface;
 use App\Interfaces\OrderInterface;
 use App\Traits\ApiResponse;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class OrderServices
@@ -45,8 +46,8 @@ class OrderServices
     public function getOrderUser($request)
     {
         try {
-            $startDate = $request->get('startDate');
-            $endDate = $request->get('endDate');
+            $startDate = $request->get('startDate') ?? Carbon::now()->subMonths(3)->format('Y-m-d');
+            $endDate = $request->get('endDate') ?? Carbon::now()->format('Y-m-d');
             $userId = Auth::user()->id;
             $orders = $this->orderInterface->getOrderByUserId($userId, $startDate, $endDate);
             $response = UserOrderResource::collection($orders);
@@ -63,7 +64,7 @@ class OrderServices
     {
         try {
             $data = $this->orderInterface->getOrderItem($orderId);
-            $response = UserOrderDetailResource::collection($data);
+            $response =new UserOrderDetailResource($data);
             return $this->successResponse($response, 200, "Successfully");
         } catch (\Throwable $e) {
             $result = [

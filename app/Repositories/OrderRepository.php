@@ -32,6 +32,6 @@ class OrderRepository implements OrderInterface
     }
     public function getOrderItem($orderId)
     {
-        return Order::where('id', $orderId)->with('orderItem.ticket')->get();
+        return Order::where('id', $orderId)->with('orderItem.ticket.event')->first();
     }
 }

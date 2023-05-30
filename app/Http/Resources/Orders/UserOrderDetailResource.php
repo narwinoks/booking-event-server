@@ -18,7 +18,7 @@ class UserOrderDetailResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $this->orderItem[0]->ticket->event->name ?? "",
             'status' => $this->status,
             'date' => Carbon::parse($this->created_at)->format('d M Y'),
             'items' => UserOrderItemResource::collection($this->orderItem)

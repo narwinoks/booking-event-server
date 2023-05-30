@@ -16,7 +16,7 @@ class UserOrderResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'event_name' => $this->orderItem[0]->ticket->name ?? null,
+            'event_name' => $this->orderItem[0]->ticket->event->name ?? null,
             'status' => $this->status
         ];
     }
