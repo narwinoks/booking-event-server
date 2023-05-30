@@ -20,6 +20,7 @@ class UserOrderDetailResource extends JsonResource
             'id' => $this->id,
             'name' => $this->orderItem[0]->ticket->event->name ?? "",
             'status' => $this->status,
+            'snap_url' =>$this->snap_url,
             'date' => Carbon::parse($this->created_at)->format('d M Y'),
             'items' => UserOrderItemResource::collection($this->orderItem)
         ];
