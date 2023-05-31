@@ -17,10 +17,11 @@ class TicketEventResource extends JsonResource
     {
         return [
             'ticket_id' => $this->id,
-            'thumbnail' => Carbon::createFromFormat('Y-m-d', $this->event->date)->format('d M Y'),
+            'thumbnail' => asset('assets/files/img/thumbnail/'.$this->event->thumbnail),
             'event_name' => $this->event->name,
-            'event_date' => $this->event->date,
-            'ticket_type' => $this->name
+            'event_date' =>Carbon::createFromFormat('Y-m-d', $this->event->date)->format('d M Y'),
+            'ticket_type' => $this->name,
+            "price" => $this->price,
         ];
     }
 }

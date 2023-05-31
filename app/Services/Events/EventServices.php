@@ -20,7 +20,6 @@ class EventServices
     {
         $data = $this->eventInterface->getEvent($request);
         return new EventsCollection($data);
-        dd($data);
     }
 
     public function showEvent($slug)
@@ -34,6 +33,7 @@ class EventServices
     {
         try {
             $event = $this->eventInterface->getEventByTicket($ticketId);
+            // return $event;
             if ($event) {
                 return $this->successResponse(new TicketEventResource($event), 200, "successfully");
             } else {

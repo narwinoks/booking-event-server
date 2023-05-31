@@ -50,6 +50,7 @@ class EventRepository implements EventInterface
 
         $events->with('ticket');
         return $events->paginate(6);
+
     }
 
     public function showEvent($slug)

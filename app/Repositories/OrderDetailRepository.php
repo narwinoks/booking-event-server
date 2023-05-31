@@ -15,7 +15,7 @@ class OrderDetailRepository implements OrderDetailInterface
                 'order_id' => $orderId,
                 'no_ktp' => $orderDetail['no_ktp'],
                 'ticket_id' => $orderDetail['ticket_id'],
-                'title' => $orderDetail['title'],
+                'title' => $orderDetail['title'] ?? "mr",
                 'name' => $orderDetail['name'],
                 'email' => $orderDetail['email'],
                 'phone_number' => $orderDetail['phone_number']
