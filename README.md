@@ -114,8 +114,8 @@ Run Server
   php artisan serve
 ```
 
-## BACKEND API
+## FRONTEND
 
-[BACKEND API](https://github.com/narwinoks/booking-event-client)
+[FRONTEND](https://github.com/narwinoks/booking-event-client)
 
 
