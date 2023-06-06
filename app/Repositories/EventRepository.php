@@ -48,7 +48,7 @@ class EventRepository implements EventInterface
         $events->when($request->get('price_min') && $request->get('price_max'), function ($events) use ($request) {
             $priceMin = $request->get('price_min');
             $priceMax = $request->get('price_max');
-            $events->whereBetween('min_price', [$priceMin, $priceMax]);
+            $events->havingRaw('MIN(price) >= ? AND MIN(price) <= ?', [$priceMin, $priceMax]);
         });
 
         return $events->paginate(6);
