@@ -21,7 +21,7 @@ class EventResource extends JsonResource
             'slug' => $this->slug,
             'date' => Carbon::createFromFormat('Y-m-d', $this->date)->format('d M Y'),
             'location' => $this->location,
-            'price' => $this->ticket->min('price'),
+            'price' => $this->min_price,
             'thumbnail' => asset('assets/files/img/thumbnail/' . $this->thumbnail)
         ];
     }

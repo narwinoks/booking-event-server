@@ -10,28 +10,33 @@ class EventRepository implements EventInterface
 {
     public function getEvent($request)
     {
+
         $events = Event::query();
-        $events->when($request->get('type') == 'popular', function ($events) {
-            $events->where('date', '>=', date('Y-m-d'));
-            $events->limit(6);
-            $events->inRandomOrder();
-        });
-        $events->when($request->get('order') == "price", function ($events) use ($request) {
-            $events->whereHas('ticket', function ($query) {
-                $query->orderBy('tickets.price', 'asc');
+
+        $events->join('tickets', 'events.id', '=', 'tickets.event_id')
+            ->select('events.*')
+            ->selectRaw('(SELECT MIN(price) FROM tickets WHERE event_id = events.id) as min_price')
+            ->groupBy('events.id')
+            ->when($request->get('order') == 'price', function ($query) {
+                $query->orderBy('min_price');
             });
-        })->with('ticket');
+
+        $events->when($request->get('type') == 'popular', function ($events) {
+            $events->where('date', '>=', date('Y-m-d'))
+                ->limit(6)
+                ->inRandomOrder();
+        });
 
         $events->when($request->get('location'), function ($events) use ($request) {
             $locations = explode(",", $request->get('location'));
             $events->whereIn('location', $locations);
         });
+
         $events->when($request->get('order'), function ($events) use ($request) {
             if ($request->get('order') == "date" || $request->get('order') == "name") {
                 $events->orderBy($request->get('order'));
             }
         });
-
         $events->when($request->get('search'), function ($events) use ($request) {
             $events->where('name', 'LIKE', '%' . $request->get('search') . '%');
         });
@@ -43,14 +48,10 @@ class EventRepository implements EventInterface
         $events->when($request->get('price_min') && $request->get('price_max'), function ($events) use ($request) {
             $priceMin = $request->get('price_min');
             $priceMax = $request->get('price_max');
-            $events->whereHas('ticket', function ($query) use ($priceMin, $priceMax) {
-                $query->whereBetween('price', [$priceMin, $priceMax]);
-            });
-        })->with('ticket');
+            $events->whereBetween('min_price', [$priceMin, $priceMax]);
+        });
 
-        $events->with('ticket');
         return $events->paginate(6);
-
     }
 
     public function showEvent($slug)
