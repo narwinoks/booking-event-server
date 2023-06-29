@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(OrderItem::class);
             $table->enum('status', CheckInStatus::getValues())->default(CheckInStatus::NOT_CHECKIN);
-            $table->time('time')->nullable();
+            $table->timestamp('time')->nullable();
             $table->timestamps();
         });
     }

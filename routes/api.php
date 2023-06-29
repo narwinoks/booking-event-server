@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\WebHookController;
+use App\Http\Controllers\Api\V1\CheckinController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -61,5 +62,8 @@ Route::prefix('/V1')->group(function () {
         Route::post('/change-avatar', 'updateAvatar')->name('changeAvatar');
         Route::put('/change-password', 'changePassword')->name('changePassword');
         Route::put('/change-profile', 'changeProfile')->name('changeProfile');
+    });
+    Route::controller(CheckinController::class)->prefix('checkin')->name('checkin.')->group(function () {
+        Route::post('/', 'checkin')->name('store');
     });
 });

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use app\Interfaces\CheckinInterface;
 use App\Interfaces\EventInterface;
 use App\Interfaces\OrderDetailInterface;
 use App\Interfaces\OrderInterface;
@@ -14,6 +15,7 @@ use App\Repositories\OrderRepository;
 use App\Repositories\PaymentLogRepository;
 use App\Repositories\TicketsRepository;
 use App\Repositories\UserRepository;
+use  App\Repositories\CheckinRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -46,6 +48,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             PaymentLogInterface::class,
             PaymentLogRepository::class
+        );
+        $this->app->bind(
+            CheckinInterface::class,
+            CheckinRepository::class
         );
     }
 

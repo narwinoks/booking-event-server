@@ -36,4 +36,8 @@ class OrderDetailRepository implements OrderDetailInterface
         $data = OrderItem::with('order', 'ticket.event')->where('id', $id)->first();
         return $data;
     }
+    public function getOrderByCode($code)
+    {
+        $data = OrderItem::where('code')->first();
+    }
 }

@@ -9,5 +9,5 @@ class CheckIn extends Model
 {
     use HasFactory;
     protected $guarded = [''];
-    protected $table = 'checkin';       
+    protected $table = 'check_in';
 }
