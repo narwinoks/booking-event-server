@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\CheckInStatus;
 use App\Models\Order;
 use App\Models\Ticket;
 use Illuminate\Database\Migrations\Migration;
@@ -25,6 +26,7 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->string('no_ktp')->nullable();
             $table->string('file')->nullable();
+            $table->enum('check_in' ,CheckInStatus::getValues())->default(CheckInStatus::NOT_CHECKIN);
             $table->timestamps();
         });
     }

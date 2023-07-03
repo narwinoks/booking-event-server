@@ -32,13 +32,13 @@ class SendMailServices
         try {
             $order = $this->orderInterface->getOrderWithDetailTicket($orderId);
 
-            // generate pdf 
+            // generate pdf
             foreach ($order->orderItem as $key => $item) {
                 $pdfContent =  $this->generatePdfFile($item->id);
                 // Save PDF to a file
                 $filename = time() . $item->id . ".pdf";
                 $updateOrderItem = [
-                    'code' => Str::random(8),
+                    'code' =>"booking-".Str::random(8),
                     'file' => $filename
                 ];
                 // update order detail

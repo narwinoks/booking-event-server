@@ -18,7 +18,29 @@ class CheckinService
         $this->checkRepository = $checkinInterface;
         $this->orderItemRepository = $orderItemRepository;
     }
-    public function Checkin($orderId)
+    public function Checkin($code)
+    {
+        try {
+            $orderItem = $this->orderItemRepository->getOrderByCode($code);
+            if (!$orderItem){
+                return  $this->errorResponse("data not found", 404);
+            }
+
+            $data = [
+                'check_in' => CheckInStatus::CHECKIN,
+            ];
+            $result = $this->orderItemRepository->updateOrderItem($orderItem->id, $data);
+            return  $this->successResponse($result,200,"successfully" );
+        }catch (\Throwable $e) {
+            $result = [
+                'status' => $e->getCode(),
+                'message' => $e->getMessage()
+            ];
+
+            return $this->errorResponse($result['message'], 500);
+        }
+    }
+    public function Checkin2($orderId)
     {
 
         try {

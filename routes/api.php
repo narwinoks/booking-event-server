@@ -63,7 +63,7 @@ Route::prefix('/V1')->group(function () {
         Route::put('/change-password', 'changePassword')->name('changePassword');
         Route::put('/change-profile', 'changeProfile')->name('changeProfile');
     });
-    Route::controller(CheckinController::class)->prefix('checkin')->name('checkin.')->group(function () {
+    Route::middleware(['auth.jwt','admin'])->controller(CheckinController::class)->prefix('checkin')->name('checkin.')->group(function () {
         Route::post('/', 'checkin')->name('store');
     });
 });

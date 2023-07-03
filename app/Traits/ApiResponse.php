@@ -21,7 +21,7 @@ trait ApiResponse
     protected function errorResponse(String $message, int $code = 500, $error = null, String $customCode = null)
     {
         $response = [
-            'success' => true,
+            'success' => false,
             'message' => $message,
             'errors' => $error,
             'code' => $customCode
