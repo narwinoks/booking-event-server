@@ -8,4 +8,6 @@ interface OrderDetailInterface
     public function updateOrderItem($id, $data);
     public function getOrderDetailWithOrderTicket($id);
     public function getOrderByCode($code);
+    public function getAllOrderItems($request);
+    public  function getAllOrderItemsByEvent($event,$search);
 }

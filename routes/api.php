@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\WebHookController;
 use App\Http\Controllers\Api\V1\CheckinController;
+use App\Http\Controllers\Api\V1\OrderDetailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -63,7 +64,12 @@ Route::prefix('/V1')->group(function () {
         Route::put('/change-password', 'changePassword')->name('changePassword');
         Route::put('/change-profile', 'changeProfile')->name('changeProfile');
     });
-    Route::middleware(['auth.jwt','admin'])->controller(CheckinController::class)->prefix('checkin')->name('checkin.')->group(function () {
-        Route::post('/', 'checkin')->name('store');
+    Route::middleware(['auth.jwt','admin'])->group(function(){
+        Route::controller(CheckinController::class)->prefix('checkin')->name('checkin.')->group(function () {
+            Route::post('/', 'checkin')->name('store');
+        });
+        Route::controller(OrderDetailController::class)->prefix('order-detail')->name('orderDetail.')->group(function () {
+            Route::get('/list', 'getOrderDetailList')->name('list');
+        });
     });
 });

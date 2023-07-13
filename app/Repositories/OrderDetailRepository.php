@@ -39,5 +39,29 @@ class OrderDetailRepository implements OrderDetailInterface
     public function getOrderByCode($code)
     {
         $data = OrderItem::where('code')->first();
+        return $data;
+    }
+
+    public function getAllOrderItems($request)
+    {
+        $data = OrderItem::with('ticket.event')->get();
+        return $data;
+    }
+
+    public  function getAllOrderItemsByEvent($event,$search){
+        $data = OrderItem::with('ticket.event')
+            ->whereHas('ticket.event', function ($query) use ($event) {
+                $query->where('id', $event);
+            })
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'LIKE', "%$search%")
+                        ->orWhere('no_ktp', 'LIKE', "%$search%")
+                        ->orWhere('code', 'LIKE', "%$search%");
+                });
+            })
+            ->where('code', '!=' ,null)
+            ->get();
+        return $data;
     }
 }

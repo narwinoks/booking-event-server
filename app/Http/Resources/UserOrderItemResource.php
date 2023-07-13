@@ -17,7 +17,7 @@ class UserOrderItemResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->ticket->name,
-            'file' => $this->file,
+            'file' =>$this->file ? asset('assets/files/pdf/' . $this->file) : null,
         ];
     }
 }

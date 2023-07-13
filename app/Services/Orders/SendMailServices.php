@@ -6,6 +6,7 @@ use App\Interfaces\OrderDetailInterface;
 use App\Interfaces\OrderInterface;
 use App\Interfaces\TicketsInterface;
 use App\Mail\SendAttachmentEmail;
+use App\Models\OrderItem;
 use App\Services\Events\TicketService;
 use App\Traits\ApiResponse;
 use Dompdf\Dompdf;
@@ -34,7 +35,6 @@ class SendMailServices
 
             // generate pdf
             foreach ($order->orderItem as $key => $item) {
-                $pdfContent =  $this->generatePdfFile($item->id);
                 // Save PDF to a file
                 $filename = time() . $item->id . ".pdf";
                 $updateOrderItem = [
@@ -43,12 +43,14 @@ class SendMailServices
                 ];
                 // update order detail
                 $this->orderDetailInterface->updateOrderItem($item->id, $updateOrderItem);
+                $pdfContent =  $this->generatePdfFile($item->id);   
                 $pdfPath = public_path('assets/files/pdf/' . $filename);
                 file_put_contents($pdfPath, $pdfContent);
             }
 
+            $newOrder = $this->orderInterface->getOrderWithDetailTicket($orderId);
             $mailData = [
-                'order' => $order
+                'order' => $newOrder
             ];
             // update tickets
             $this->ticketService->updateSoldTicket($order->orderItem[0]->id,  count($order->OrderItem));
