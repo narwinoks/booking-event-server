@@ -21,7 +21,8 @@ class CheckInResource extends JsonResource
             'ticket_type' =>$this->ticket->name,
             'order_name' =>$this->name,
             'order_code' =>$this->code,
-            'nik' =>$this->no_ktp
+            'nik' =>$this->no_ktp,
+            'checkIn'=>$this->check_in
         ];
     }
 }

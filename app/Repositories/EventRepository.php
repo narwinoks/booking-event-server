@@ -71,4 +71,9 @@ class EventRepository implements EventInterface
         $event = Ticket::with('event')->where('id', $ticketId)->first();
         return $event;
     }
+
+    public  function getEventActive(){
+        $event =Event::select('name' ,'id')->get();
+        return $event;
+    }
 }

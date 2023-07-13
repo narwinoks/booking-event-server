@@ -41,6 +41,7 @@ Route::prefix('/V1')->group(function () {
     });
     Route::controller(EventController::class)->prefix('events')->name('events.')->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('/active', 'getEventActive')->name('getEventActive');
         Route::get('/get-event-by-ticket/{id}', 'getEventByTicket')->name('getEventByTicket');
         Route::get('/{slug}', 'show')->name('show');
     });

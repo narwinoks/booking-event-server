@@ -8,4 +8,5 @@ interface EventInterface
     public function showEvent($slug);
     public function getLocation();
     public function getEventByTicket($ticketId);
+    public function getEventActive();
 }

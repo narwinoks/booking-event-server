@@ -6,7 +6,11 @@ use App\Http\Resources\Events\EventsCollection;
 use App\Http\Resources\Ticket\TicketResource;
 use App\Http\Resources\TicketEventResource;
 use App\Interfaces\EventInterface;
+use App\Responses\OrderDetail\OrderDetail;
 use App\Traits\ApiResponse;
+use Exception;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use function App\Helpers\error;
 
 class EventServices
 {
@@ -46,5 +50,15 @@ class EventServices
             ];
             return $this->errorResponse($result['message'], 500);
         }
+    }
+
+    public  function getEventActive(){
+        try {
+            $data =$this->eventInterface->getEventActive();
+        }catch (Exception $exception) {
+            $error =array_merge(OrderDetail::GET_ORDER_FAILED,['stack'=>$exception->getMessage()]);
+            throw new HttpResponseException(error($error));
+        }
+        return $data;
     }
 }
