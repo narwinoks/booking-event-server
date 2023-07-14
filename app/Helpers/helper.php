@@ -14,6 +14,6 @@ if (!function_exists('success')) {
 if (!function_exists('error')) {
     function error($message = [], $statusCode = 400, $error = []): JsonResponse
     {
-        return response()->json(array_merge($message, $error), $statusCode);
+        return response()->json(array_merge($message, $error),404);
     }
 }

@@ -38,7 +38,7 @@ class EventRepository implements EventInterface
             }
         });
         $events->when($request->get('search'), function ($events) use ($request) {
-            $events->where('name', 'LIKE', '%' . $request->get('search') . '%');
+            $events->where('events.name', 'LIKE', '%' . $request->get('search') . '%');
         });
 
         $events->when($request->get('date'), function ($events) use ($request) {

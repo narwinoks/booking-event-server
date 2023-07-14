@@ -22,11 +22,10 @@ class OrderDetailService
         try {
             $data = $this->orderDetailInterface->getAllOrderItemsByEvent($eventId,$search);
             if(count($data) <=0){
-                throw new HttpResponseException(error(OrderDetail::GET_ORDER_NOT_FOUND));
+                throw new HttpResponseException(error(OrderDetail::GET_ORDER_NOT_FOUND,404));
             }
-        }catch (Exception $exception){
-            $error =array_merge(OrderDetail::GET_ORDER_FAILED,[$exception]);
-            throw new HttpResponseException(error($error));
+        }catch (\Exception $exception){
+            throw new HttpResponseException(error(OrderDetail::GET_ORDER_NOT_FOUND));
         }
         return $data;
     }
