@@ -38,7 +38,7 @@ class OrderDetailRepository implements OrderDetailInterface
     }
     public function getOrderByCode($code)
     {
-        $data = OrderItem::where('code')->first();
+        $data = OrderItem::find($code);
         return $data;
     }
 

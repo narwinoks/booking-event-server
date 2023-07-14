@@ -22,7 +22,7 @@ class CheckInResource extends JsonResource
             'order_name' =>$this->name,
             'order_code' =>$this->code,
             'nik' =>$this->no_ktp,
-            'checkIn'=>$this->check_in ? false :   true
+            'checkIn'=>$this->check_in == 0 ? false :   true
         ];
     }
 }

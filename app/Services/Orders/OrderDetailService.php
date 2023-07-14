@@ -19,14 +19,14 @@ class OrderDetailService
         $this->orderDetailInterface = $orderDetailInterface;
     }
     public function getAllOrderDetail($eventId,$search){
-        try {
+//        try {
             $data = $this->orderDetailInterface->getAllOrderItemsByEvent($eventId,$search);
-            if(count($data) <=0){
-                throw new HttpResponseException(error(OrderDetail::GET_ORDER_NOT_FOUND,404));
-            }
-        }catch (\Exception $exception){
-            throw new HttpResponseException(error(OrderDetail::GET_ORDER_NOT_FOUND));
-        }
+//            if(count($data) <=0){
+//                throw new HttpResponseException(error(OrderDetail::GET_ORDER_NOT_FOUND,404));
+//            }
+//        }catch (\Exception $exception){
+//            throw new HttpResponseException(error(OrderDetail::GET_ORDER_NOT_FOUND));
+//        }
         return $data;
     }
 }

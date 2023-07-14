@@ -19,6 +19,7 @@ class AuthResource extends JsonResource
             'username' => $this->username,
             'email' => $this->email,
             'avatar' => asset('assets/files/img/avatar/' . $this->avatar),
+            'role'=>$this->role,
             'joinAt' => $this->created_at->diffForHumans(),
         ];
     }
